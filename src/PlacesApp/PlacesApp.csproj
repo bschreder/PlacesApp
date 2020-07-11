@@ -143,27 +143,27 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UI\Content\bootstrap-theme.css" />
-    <Content Include="UI\Content\bootstrap-theme.min.css" />
-    <Content Include="UI\Content\bootstrap.css" />
-    <Content Include="UI\Content\bootstrap.min.css" />
+    <Content Include="ViewResources\Content\bootstrap-theme.css" />
+    <Content Include="ViewResources\Content\bootstrap-theme.min.css" />
+    <Content Include="ViewResources\Content\bootstrap.css" />
+    <Content Include="ViewResources\Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="UI\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="ViewResources\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="UI\Content\Site.css" />
-    <Content Include="UI\Scripts\bootstrap.js" />
-    <Content Include="UI\Scripts\bootstrap.min.js" />
-    <None Include="UI\Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="UI\Scripts\jquery-3.4.1.js" />
-    <Content Include="UI\Scripts\jquery-3.4.1.min.js" />
-    <Content Include="UI\Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="UI\Scripts\jquery-3.4.1.slim.min.js" />
-    <None Include="UI\Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="UI\Scripts\jquery.validate.js" />
-    <Content Include="UI\Scripts\jquery.validate.min.js" />
-    <Content Include="UI\Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="UI\Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="UI\Scripts\modernizr-2.8.3.js" />
+    <Content Include="ViewResources\Content\Site.css" />
+    <Content Include="ViewResources\Scripts\bootstrap.js" />
+    <Content Include="ViewResources\Scripts\bootstrap.min.js" />
+    <None Include="ViewResources\Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="ViewResources\Scripts\jquery-3.4.1.js" />
+    <Content Include="ViewResources\Scripts\jquery-3.4.1.min.js" />
+    <Content Include="ViewResources\Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="ViewResources\Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="ViewResources\Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="ViewResources\Scripts\jquery.validate.js" />
+    <Content Include="ViewResources\Scripts\jquery.validate.min.js" />
+    <Content Include="ViewResources\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="ViewResources\Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="ViewResources\Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -184,17 +184,17 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UI\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="UI\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="UI\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="UI\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="UI\Content\bootstrap.min.css.map" />
-    <Content Include="UI\Content\bootstrap.css.map" />
-    <Content Include="UI\Content\bootstrap-theme.min.css.map" />
-    <Content Include="UI\Content\bootstrap-theme.css.map" />
+    <Content Include="ViewResources\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="ViewResources\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="ViewResources\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="ViewResources\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="ViewResources\Content\bootstrap.min.css.map" />
+    <Content Include="ViewResources\Content\bootstrap.css.map" />
+    <Content Include="ViewResources\Content\bootstrap-theme.min.css.map" />
+    <Content Include="ViewResources\Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="UI\Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="UI\Scripts\jquery-3.4.1.min.map" />
+    <Content Include="ViewResources\Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="ViewResources\Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

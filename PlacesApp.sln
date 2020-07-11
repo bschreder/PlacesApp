@@ -5,11 +5,17 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlacesApp", "src\PlacesApp\PlacesApp.csproj", "{00603412-0243-40A8-8AB7-C935403A2BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "src\Library\Library.csproj", "{8B0709B2-80B2-4721-8C95-CD102C704847}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "src\Library\Library.csproj", "{8B0709B2-80B2-4721-8C95-CD102C704847}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FF14D91D-57B0-45E4-B6A7-AECD342BE096}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlacesApp.UnitTest", "test\PlacesApp.UnitTest\PlacesApp.UnitTest.csproj", "{D2678E04-7A6B-4929-A3FC-72350B4F8EEC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68814504-C07B-4770-AD99-895440960ADB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
