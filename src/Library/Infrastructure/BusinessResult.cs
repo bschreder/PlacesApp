@@ -1,4 +1,4 @@
-﻿using Library.Errors;
+﻿using Library.BusinessErrors;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 

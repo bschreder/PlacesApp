@@ -1,11 +1,10 @@
-﻿using Library.Interfaces;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 
-namespace Library.Errors
+namespace Library.BusinessErrors
 {
-    public class BusinessError : IBusinessError
+    public class BusinessError
     {
         /// <summary>
         /// Error property
@@ -31,11 +30,22 @@ namespace Library.Errors
         public BusinessError(LogLevel level, string errorMessage, Exception ex = null, string operationId = null)
         {
             ErrorLevel = (ex == null) ? level : LogLevel.Critical;
-            Message = FormatMessage(level, errorMessage, ex, operationId);
+            Message = FormatMessage(level, $"Message: {errorMessage}", ex, operationId);
         }
 
-
-
+        /// <summary>
+        /// CTOR w/ Location
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="level"></param>
+        /// <param name="errorMessage"></param>
+        /// <param name="ex"></param>
+        /// <param name="operationId"></param>
+        public BusinessError(string location, LogLevel level, string errorMessage, Exception ex = null, string operationId = null)
+        {
+            ErrorLevel = (ex == null) ? level : LogLevel.Critical;
+            Message = FormatMessage(level, $"Location: {location}\nMessage: {errorMessage}", ex, operationId);
+        }
 
         /// <summary>
         /// Format Error (or Exception) Message
@@ -49,8 +59,8 @@ namespace Library.Errors
         private string FormatMessage(LogLevel level, string errorMessage, Exception ex, string operationId = null)
         {
             var rtnVal = (ex != null)
-                ? $"Level: {level}, Message: {errorMessage}, OperationId: {operationId} \n Exception Message: {ex.Message} \n {ex.StackTrace}"
-                : $"Level: {level}, Message: {errorMessage}, OperationId: {operationId}";
+                ? $"Level: {level}, {errorMessage}, OperationId: {operationId} \n Exception Message: {ex.Message} \n {ex.StackTrace}"
+                : $"Level: {level}, {errorMessage}, OperationId: {operationId}";
             return rtnVal;
         }
     }

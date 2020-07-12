@@ -1,4 +1,4 @@
-﻿using Library.Errors;
+﻿using Library.BusinessErrors;
 using System.Collections.Generic;
 
 namespace Library.Interfaces

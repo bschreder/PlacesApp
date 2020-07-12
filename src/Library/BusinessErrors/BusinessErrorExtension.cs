@@ -1,11 +1,11 @@
-﻿using Library.Errors;
+﻿using Library.BusinessErrors;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Common_Infrastructure.Errors
+namespace Common_Infrastructure.BusinessErrors
 {
     /// <summary>
     /// Extension method for BusinessError

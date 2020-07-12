@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace Library.Errors
+namespace Library.BusinessErrors
 {
     public class BusinessException : Exception
     {

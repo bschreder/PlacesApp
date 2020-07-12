@@ -8,23 +8,35 @@ namespace PlacesApp
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/ViewResources/Scripts/jquery-{version}.js"));
+            //  3rd party scripts and Application wide scripts
+            bundles.Add(new ScriptBundle("~/bundles/script/common-script")
+                   .Include(
+                        "~/ViewResources/Common/Scripts/jquery-{version}.js",
+                        "~/ViewResources/Common/Scripts/jquery.validate*",
+                        "~/ViewResources/Common/Scripts/bootstrap.js"
+                        )
+                   .IncludeDirectory("~/ViewResources/Application/Scripts/", "*.js", true)
+                   );
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/ViewResources/Scripts/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/ViewResources/Scripts/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/script/modernizr")
+                   .Include("~/ViewResources/Common/Scripts/modernizr-*")
+                   );
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/ViewResources/Scripts/bootstrap.js"));
+            //  Page  scripts
+            //bundles.Add(new ScriptBundle("~/bundles/place-script")
+            //       .IncludeDirectory("~/ViewResources/Application/Scripts/", "*.js", true)
+            //       );
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/ViewResources/Content/bootstrap.css",
-                      "~/ViewResources/Content/site.css"));
+
+            //  3rd party and Application styles
+            bundles.Add(new StyleBundle("~/bundles/Content/css")
+                   .Include(
+                      "~/ViewResources/Common/Content/bootstrap.css",
+                      "~/ViewResources/Application/Content/site.css"
+                      ));
         }
     }
 }

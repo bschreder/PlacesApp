@@ -4,7 +4,7 @@ namespace Library.Interfaces
 {
     public class IBusinessError
     {
-        string Error { get; }
+        string Message { get; }
         LogLevel ErrorLevel { get; set; }
     }
 }

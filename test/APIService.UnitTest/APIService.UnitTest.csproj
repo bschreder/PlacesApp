@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D2678E04-7A6B-4929-A3FC-72350B4F8EEC}</ProjectGuid>
+    <ProjectGuid>{8629B85A-7479-4D69-B918-C2D641A266D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PlacesApp.UnitTest</RootNamespace>
-    <AssemblyName>PlacesApp.UnitTest</AssemblyName>
+    <RootNamespace>Library.UnitTest</RootNamespace>
+    <AssemblyName>Library.UnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -40,17 +40,17 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionResponseTest.cs" />
-    <Compile Include="Mock\TestController.cs" />
-    <Compile Include="Mock\TestModel.cs" />
+    <Compile Include="Mock\InputClass.cs" />
+    <Compile Include="Mock\OutputClass.cs" />
+    <Compile Include="RESTRequestTest.cs" />
+    <Compile Include="Mock\RESTRequestStub.cs" />
+    <Compile Include="Mock\HttpMessageHandlerStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.Mvc">
-      <Version>5.2.7</Version>
-    </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
       <Version>2.1.2</Version>
     </PackageReference>
@@ -67,13 +67,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\APIService\APIService.csproj">
+      <Project>{EAE26870-E04A-4FE9-8987-A312E47392B6}</Project>
+      <Name>APIService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Library\Library.csproj">
       <Project>{8B0709B2-80B2-4721-8C95-CD102C704847}</Project>
       <Name>Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\PlacesApp\PlacesApp.csproj">
-      <Project>{00603412-0243-40A8-8AB7-C935403A2BFB}</Project>
-      <Name>PlacesApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
