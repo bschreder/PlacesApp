@@ -18,14 +18,22 @@ namespace DomainBusinessLogic.PlaceSearch
         private readonly HttpClient _httpClient = default;
         private readonly ILogger _logger = default;
 
-
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="logger"></param>
         public PlaceAutocompleteSearchProcessor(HttpClient httpClient, ILogger logger)
         {
             _httpClient = httpClient;
             _logger = logger;
         }
 
-
+        /// <summary>
+        /// Place Autocomplete search request and response processor
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<BusinessResult<SearchPlacesResponse>> ExecuteAsync(SearchPlacesRequest request)
         {
             var result = new BusinessResult<SearchPlacesResponse>() { Result = new SearchPlacesResponse() };
@@ -62,31 +70,34 @@ namespace DomainBusinessLogic.PlaceSearch
                 result.Error.AddRange(restService.Error);
 
                 //  check response status
-                if (!string.IsNullOrEmpty(restService.Result.Error_message))
+                if (!string.IsNullOrEmpty(restService.Result?.Error_message))
                     result.Error.Add(new BusinessError(LogLevel.Error, restService.Result.Error_message, null, request.OperationId));
-                if (!restService.Result.Status.Equals($"{PlaceResponseStatus.OK}"))
+                if (!restService.Result?.Status.Equals($"{PlaceResponseStatus.OK}") ?? false)
                     result.Error.Add(new BusinessError(LogLevel.Error, $"Reponse Status: {restService.Result.Status}", null, request.OperationId));
 
-                //  process response
-                result.Result.Status = restService.Result.Status;
-                result.Result.SessionToken = request.SessionToken;
-                result.Result.OperationId = string.IsNullOrEmpty(result.Result.OperationId) 
-                                                ? request.OperationId 
-                                                : result.Result.OperationId;
-
-                result.Result.Predictions = new List<SearchPlacePrediction>();
-                foreach (var predicition in restService.Result.Predictions)
+                if (result.Error.Count == 0)
                 {
-                    var searchPlacePredicition = new SearchPlacePrediction()
+                    //  process response
+                    result.Result.Status = restService.Result.Status;
+                    result.Result.SessionToken = request.SessionToken;
+                    result.Result.OperationId = string.IsNullOrEmpty(result.Result.OperationId)
+                                                    ? request.OperationId
+                                                    : result.Result.OperationId;
+
+                    result.Result.Predictions = new List<SearchPlacePrediction>();
+                    foreach (var predicition in restService.Result.Predictions)
                     {
-                        Description = predicition.Description,
-                        Id = predicition.Id,
-                        PlaceId = predicition.Place_id,
-                        Reference = predicition.Reference,
-                        Types = predicition.Types.ToList(),
-                        DistanceMeters = predicition.Distance_meters,
-                    };
-                    result.Result.Predictions.Add(searchPlacePredicition);
+                        var searchPlacePredicition = new SearchPlacePrediction()
+                        {
+                            Description = predicition.Description,
+                            Id = predicition.Id,
+                            PlaceId = predicition.Place_id,
+                            Reference = predicition.Reference,
+                            Types = predicition.Types.ToList(),
+                            DistanceMeters = predicition.Distance_meters,
+                        };
+                        result.Result.Predictions.Add(searchPlacePredicition);
+                    }
                 }
 
             }
@@ -95,7 +106,6 @@ namespace DomainBusinessLogic.PlaceSearch
                 result.Error.Add(new BusinessError($"{this.GetType().FullName}.CreateRequestDictionary", LogLevel.Critical, "Exception found", ex, request.OperationId));
             }
 
-            if(result.Error.Count > 0)
                 result.Error.ErrorLogger(_logger);
             return result;
         }

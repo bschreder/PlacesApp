@@ -21,6 +21,10 @@ namespace PlacesApp.Controllers
             _logger = new NullLogger();
         }
 
+        /// <summary>
+        /// Place Webpage Index 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -30,14 +34,18 @@ namespace PlacesApp.Controllers
             return View(new PlaceIndexViewModel { PlaceIndexResponse = response });
         }
 
+        /// <summary>
+        /// Place Autocomplete Endpoint
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<JsonResult> PlacesAutocomplete(SearchPlacesRequest request)
         {
-            //var response = new BusinessResult<SearchPlacesResponse>() { Result = new SearchPlacesResponse() };
             BusinessResult<SearchPlacesResponse> response = default;
 
-            request.ApiKey = Globals.Credentials.PlacesApiKey;
-            request.PlaceBaseUrl = Globals.Configuration.PlaceBaseUrl;
+            request.ApiKey = Globals.Credentials?.PlacesApiKey;
+            request.PlaceBaseUrl = Globals.Configuration?.PlaceBaseUrl;
 
             using (var httpClient = new HttpClient())
                 response = await new PlaceAutocompleteSearchProcessor(httpClient, _logger).ExecuteAsync(request);

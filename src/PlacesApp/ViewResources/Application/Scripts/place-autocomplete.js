@@ -46,11 +46,12 @@
                     response(data);
                 }
             }).done(function (data) {
-                if (data.Result.Predictions.length === 0) {
+                $(searchTerm).removeClass("ui-autocomplete-loading");
+                if (Array.isArray(data.Result.Predictions) && data.Result.Predictions.length === 0) {
                     let msg = 'Invalid input: ' + data.Result.Status;
                     $(invalidInput).html(msg).show();
                 }
-                if (data.Error.length > 0) {
+                if (data.Result.DisplayErrors && data.Error.length > 0) {
                     let msg = invalidResult(data);
                     $(ajaxError).html(msg).show();
                 }
@@ -97,7 +98,6 @@
 
             $(searchTerm).val('');
             $(searchId).text('');
-            $(searchTerm).removeClass("ui-autocomplete-loading");
 
             return false;
         }

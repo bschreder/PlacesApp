@@ -9,9 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace APIService.RestApi
 {
@@ -26,6 +24,12 @@ namespace APIService.RestApi
             _httpClient = httpClient;
         }
 
+        /// <summary>
+        /// Http.Get request service
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="serviceRequest"></param>
+        /// <returns></returns>
         public async Task<BusinessResult<TResult>> Get(RESTRequestParameters parameters, TRequest serviceRequest = null)
         {
             var result = new BusinessResult<TResult>();
@@ -57,6 +61,12 @@ namespace APIService.RestApi
             return result;
         }
 
+        /// <summary>
+        /// Http.Post request service
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="serviceRequest"></param>
+        /// <returns></returns>
         public async Task<BusinessResult<TResult>> Post(RESTRequestParameters parameters, TRequest serviceRequest)
         {
             var result = new BusinessResult<TResult>();
