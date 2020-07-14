@@ -1,0 +1,38 @@
+/*
+ *    Commonly used helpers
+ */
+
+/*
+ *  width helpers
+ */
+.width-reset {
+    min-width: initial;
+    width: auto;
+}
+
+/*  width helpers (absolute: px)  */
+.width-45px {
+    width: 45px;
+}
+
+.width-50px {
+    width: 50px;
+}
+
+/*  width helpers (relative: %)  */
+.width-50p {
+    width: 50%;
+}
+
+
+/*
+ *  Errors
+ */
+.error-log {
+    color: firebrick;
+    margin-left: 125px;
+}
+
+#ajax-error {
+    display: none;
+}
