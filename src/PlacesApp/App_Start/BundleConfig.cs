@@ -13,9 +13,11 @@ namespace PlacesApp
                    .Include(
                         "~/ViewResources/Common/Scripts/jquery-{version}.js",
                         "~/ViewResources/Common/Scripts/jquery.validate*",
-                        "~/ViewResources/Common/Scripts/bootstrap.js"
+                        "~/ViewResources/Common/Scripts/bootstrap.js",
+                        "~/ViewResources/Common/Scripts/jquery-ui.js"
                         )
                    .IncludeDirectory("~/ViewResources/Application/Scripts/", "*.js", true)
+                   .IncludeDirectory("~/ViewResources/Common/Model/", "*.js", true)
                    );
 
 
@@ -26,15 +28,17 @@ namespace PlacesApp
                    );
 
             //  Page  scripts
-            //bundles.Add(new ScriptBundle("~/bundles/place-script")
-            //       .IncludeDirectory("~/ViewResources/Application/Scripts/", "*.js", true)
-            //       );
+            bundles.Add(new ScriptBundle("~/bundles/script/place-script")
+                   .IncludeDirectory("~/ViewResources/Place/Model/", "*.js", true)
+                   );
 
 
             //  3rd party and Application styles
             bundles.Add(new StyleBundle("~/bundles/Content/css")
                    .Include(
                       "~/ViewResources/Common/Content/bootstrap.css",
+                      "~/ViewResources/Common/Content/jquery-ui.css",
+                      "~/ViewResources/Application/Content/helpers.css",
                       "~/ViewResources/Application/Content/site.css"
                       ));
         }

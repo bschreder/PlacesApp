@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <Folder Include="BusinessErrors\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>

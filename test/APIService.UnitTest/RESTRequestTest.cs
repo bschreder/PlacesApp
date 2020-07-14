@@ -1,5 +1,6 @@
 ﻿using APIService.RestApi;
 using APIService.UnitTest.Mock;
+using LibraryTest;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -12,7 +13,7 @@ using Xunit.Abstractions;
 
 namespace APIService.UnitTest
 {
-    public class RESTRequestTest
+    public class RESTRequestTest : IDisposable
     {
         private readonly ITestOutputHelper _output = default;
 
@@ -113,6 +114,16 @@ namespace APIService.UnitTest
             Assert.NotNull(response.Result);
             Assert.Empty(response.Error);
             Assert.Equal(_testOutputClass.Message, response.Result.Message);
+        }
+
+
+        //  Dispose
+        private bool isDisposed = false;
+        public void Dispose()
+        {
+            if (!isDisposed)
+                _httpClient.Dispose();
+            isDisposed = true;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace APIService.RestApi
 {
@@ -10,5 +11,8 @@ namespace APIService.RestApi
 
         [JsonProperty(PropertyName = "url", Required = Required.Always)]
         public string Url { get; set; }
+
+        [JsonProperty(PropertyName = "cancellationToken", NullValueHandling = NullValueHandling.Ignore)]
+        public CancellationToken CancellationToken { get; set; }
     }
 }

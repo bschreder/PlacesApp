@@ -47,7 +47,6 @@
     <Compile Include="Mock\OutputClass.cs" />
     <Compile Include="RESTRequestTest.cs" />
     <Compile Include="Mock\RESTRequestStub.cs" />
-    <Compile Include="Mock\HttpMessageHandlerStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +73,10 @@
     <ProjectReference Include="..\..\src\Library\Library.csproj">
       <Project>{8B0709B2-80B2-4721-8C95-CD102C704847}</Project>
       <Name>Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibraryTest\LibraryTest.csproj">
+      <Project>{24C962BA-8E7D-4354-837D-4480CB6EBE02}</Project>
+      <Name>LibraryTest</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

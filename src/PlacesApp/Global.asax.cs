@@ -10,7 +10,7 @@ namespace PlacesApp
 {
     public class MvcApplication : HttpApplication
     {
-        private readonly string _credentialFile = "credentials.json";
+        private const string _credentialFile = "credentials.json";
 
         protected void Application_Start()
         {

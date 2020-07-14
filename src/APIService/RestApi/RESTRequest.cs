@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -45,14 +46,14 @@ namespace APIService.RestApi
             if ((serviceRequest is Dictionary<string, string> requestParameters) && (!parameters.Url.Contains("?")))
             {
                 var queryString = string.Join("&", requestParameters.Select(kvp => kvp.Key + '=' + kvp.Value));
-                var queryEncodedString = HttpUtility.UrlEncode(queryString, Encoding.UTF8);
-                parameters.Url = string.Concat(parameters.Url, "?", queryEncodedString);
+                //var queryEncodedString = HttpUtility.UrlEncode(queryString, Encoding.UTF8);
+                parameters.Url = string.Concat(parameters.Url, "?", queryString);
             }
 
             var serviceResult = await ExecuteRequestAsync(HttpMethod.Get, parameters, null);
-
             result.Error.AddRange(serviceResult.Error);
             result.Result = serviceResult.Result;
+
             return result;
         }
 
@@ -112,7 +113,7 @@ namespace APIService.RestApi
                 }
 
                 // Response
-                HttpResponseMessage httpResponse = await _httpClient.SendAsync(httpRequest).ConfigureAwait(false);
+                HttpResponseMessage httpResponse = await _httpClient.SendAsync(httpRequest, parameters.CancellationToken).ConfigureAwait(false);
 
                 if (!httpResponse.IsSuccessStatusCode)
                 {

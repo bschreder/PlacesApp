@@ -1,11 +1,10 @@
-﻿using Library.BusinessErrors;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Common_Infrastructure.BusinessErrors
+namespace Library.BusinessErrors
 {
     /// <summary>
     /// Extension method for BusinessError
@@ -41,11 +40,22 @@ namespace Common_Infrastructure.BusinessErrors
             if (logger != null)
                 errors.ErrorLogger(logger);
 
+            throw new Exception($"{errors}");
+        }
+
+
+        public static string ToString(this IEnumerable<BusinessError> errors)
+        {
+            var builder = new StringBuilder();
+
+            if (errors.Count() == 0)
+                return null;
+
             var sb = new StringBuilder();
             foreach (var error in errors)
                 sb.AppendLine(error.Message);
 
-            throw new Exception($"{sb}");
+            return $"{builder}";
         }
     }
 

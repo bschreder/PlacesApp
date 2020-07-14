@@ -1,4 +1,7 @@
-﻿body {
+﻿/*
+ *  Site wide css
+ */
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -21,4 +24,24 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+.magnifying-glass {
+    height:12px;
+    width:12px;
+}
+
+.pa-display {
+    margin-top: 100px;
+    font-size:12px;
+    overflow-x:hidden;
+}
+
+#srch-term {
+    width: 500px;
+}
+
+.ui-autocomplete-loading {
+    background: white url("/ViewResources/Application/Images/ui-anim_basic_16x16.gif") right center no-repeat;
 }

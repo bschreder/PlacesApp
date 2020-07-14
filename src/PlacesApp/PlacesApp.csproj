@@ -143,35 +143,61 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Common\ConstantsViewModel.cs" />
+    <Compile Include="ViewModel\Place\PlaceIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="ViewResources\Application\Content\helpers.css" />
+    <Content Include="ViewResources\Application\Images\ui-anim_basic_16x16.gif" />
+    <Content Include="ViewResources\Application\Scripts\jquery-helpers.js" />
     <Content Include="ViewResources\Application\Scripts\place-autocomplete.js" />
     <Content Include="ViewResources\Common\Content\bootstrap-theme.css" />
     <Content Include="ViewResources\Common\Content\bootstrap-theme.min.css" />
     <Content Include="ViewResources\Common\Content\bootstrap.css" />
     <Content Include="ViewResources\Common\Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="ViewResources\Common\Content\jquery-ui.css" />
+    <Content Include="ViewResources\Common\Content\jquery-ui.min.css" />
     <Content Include="ViewResources\Common\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ViewResources\Application\Content\site.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ViewResources\Common\Model\api-response.js" />
+    <Content Include="ViewResources\Common\Scripts\bootstrap.bundle.js" />
+    <Content Include="ViewResources\Common\Scripts\bootstrap.bundle.min.js" />
     <Content Include="ViewResources\Common\Scripts\bootstrap.js" />
     <Content Include="ViewResources\Common\Scripts\bootstrap.min.js" />
     <Content Include="credentials.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="ViewResources\Common\Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="ViewResources\Common\Scripts\jquery-3.4.1.js" />
-    <Content Include="ViewResources\Common\Scripts\jquery-3.4.1.min.js" />
-    <Content Include="ViewResources\Common\Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="ViewResources\Common\Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="ViewResources\Common\Scripts\bootstrap.bundle.js.map" />
+    <Content Include="ViewResources\Common\Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="ViewResources\Common\Scripts\bootstrap.js.map" />
+    <Content Include="ViewResources\Common\Scripts\bootstrap.min.js.map" />
+    <Content Include="ViewResources\Common\Scripts\index.js.flow" />
+    <Content Include="ViewResources\Common\Scripts\jquery-3.5.1.min.map" />
+    <Content Include="ViewResources\Common\Scripts\jquery-3.5.1.slim.min.map" />
     <None Include="ViewResources\Common\Scripts\jquery.validate-vsdoc.js" />
+    <None Include="ViewResources\Common\Scripts\jquery-3.5.1.intellisense.js" />
+    <Content Include="ViewResources\Common\Scripts\jquery-3.5.1.js" />
+    <Content Include="ViewResources\Common\Scripts\jquery-3.5.1.min.js" />
+    <Content Include="ViewResources\Common\Scripts\jquery-3.5.1.slim.js" />
+    <Content Include="ViewResources\Common\Scripts\jquery-3.5.1.slim.min.js" />
+    <Content Include="ViewResources\Common\Scripts\jquery-ui.js" />
+    <Content Include="ViewResources\Common\Scripts\jquery-ui.min.js" />
     <Content Include="ViewResources\Common\Scripts\jquery.validate.js" />
     <Content Include="ViewResources\Common\Scripts\jquery.validate.min.js" />
     <Content Include="ViewResources\Common\Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="ViewResources\Common\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="ViewResources\Common\Scripts\modernizr-2.8.3.js" />
+    <Content Include="ViewResources\Common\Scripts\popper-utils.js" />
+    <Content Include="ViewResources\Common\Scripts\popper-utils.min.js" />
+    <Content Include="ViewResources\Common\Scripts\popper.js" />
+    <Content Include="ViewResources\Common\Scripts\popper.min.js" />
+    <Content Include="ViewResources\Place\Model\search-place-request.js" />
     <Content Include="Web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -192,6 +218,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_MasterLayout.cshtml" />
     <Content Include="Views\Place\Index.cshtml" />
+    <Content Include="ViewResources\Common\Scripts\popper-utils.js.map" />
+    <Content Include="ViewResources\Common\Scripts\popper-utils.min.js.map" />
+    <Content Include="ViewResources\Common\Scripts\popper.js.map" />
+    <Content Include="ViewResources\Common\Scripts\popper.min.js.map" />
+    <Content Include="ViewResources\Common\Scripts\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -207,13 +238,15 @@
     <Content Include="ViewResources\Common\Content\bootstrap-theme.min.css.map" />
     <Content Include="ViewResources\Common\Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="ViewResources\Common\Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="ViewResources\Common\Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DomainBusinessLogic\DomainBusinessLogic.csproj">
+      <Project>{619DA5B7-6B6A-4EE2-B161-680DA99BDD9E}</Project>
+      <Name>DomainBusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DomainEntities\DomainEntities.csproj">
       <Project>{2CFDF3BD-E50A-405D-BAD9-122445258DAE}</Project>
       <Name>DomainEntities</Name>
@@ -222,6 +255,9 @@
       <Project>{8B0709B2-80B2-4721-8C95-CD102C704847}</Project>
       <Name>Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="ViewResources\Common\Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

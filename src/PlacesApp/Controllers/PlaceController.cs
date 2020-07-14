@@ -1,47 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using DomainBusinessLogic.PlaceSearch;
+using DomainEntities.Application;
+using DomainEntities.PlaceSearch;
+using Library.BusinessErrors;
+using Library.Infrastructure;
+using Microsoft.Extensions.Logging;
+using PlacesApp.ViewModel.Place;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace PlacesApp.Controllers
 {
     public class PlaceController : Controller
     {
-        // GET: Place
+        private readonly ILogger _logger = default;
+
+        public PlaceController()
+        {
+            //  TODO:   wire in Real Logger
+            _logger = new NullLogger();
+        }
+
+        [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var response = new BusinessResult<SearchPlacesResponse>() { Result = new SearchPlacesResponse() };
+            response.Result.DisplayErrors = Globals.Configuration.DisplayErrors;
+
+            return View(new PlaceIndexViewModel { PlaceIndexResponse = response });
         }
 
-        // GET: Place/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Place/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Place/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<JsonResult> PlacesAutocomplete(SearchPlacesRequest request)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            //var response = new BusinessResult<SearchPlacesResponse>() { Result = new SearchPlacesResponse() };
+            BusinessResult<SearchPlacesResponse> response = default;
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            request.ApiKey = Globals.Credentials.PlacesApiKey;
+            request.PlaceBaseUrl = Globals.Configuration.PlaceBaseUrl;
+
+            using (var httpClient = new HttpClient())
+                response = await new PlaceAutocompleteSearchProcessor(httpClient, _logger).ExecuteAsync(request);
+
+            response.Result.DisplayErrors = Globals.Configuration.DisplayErrors;
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
-
 
 
 
