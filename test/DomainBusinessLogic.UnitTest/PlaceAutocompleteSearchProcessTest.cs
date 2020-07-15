@@ -1,5 +1,7 @@
-﻿using DomainBusinessLogic.PlaceSearch;
+﻿using APIService.RestApi;
+using DomainBusinessLogic.PlaceSearch;
 using DomainEntities.Application;
+using DomainEntities.Place;
 using DomainEntities.PlaceSearch;
 using Library.BusinessErrors;
 using Library.Infrastructure;
@@ -21,7 +23,8 @@ namespace DomainBusinessLogic.UnitTest
     public class PlaceAutocompleteSearchProcessTest : IDisposable
     {
         private readonly ITestOutputHelper _output = default;
-        private HttpClient _httpClient = default;
+        private readonly HttpClient _httpClient = default;
+        private readonly RESTRequest<PlacesResponse, Dictionary<string, string>> _restService = default;
         private readonly ILogger _logger = default;
         private readonly OutputClass _testOutputClass = default;
 
@@ -37,6 +40,7 @@ namespace DomainBusinessLogic.UnitTest
             var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(JsonConvert.SerializeObject(_testOutputClass)) };
             var httpMessageHanderStub = new HttpMessageHandlerStub((request, cancellationToken) => Task.FromResult(httpResponseMessage));
             _httpClient = new HttpClient(httpMessageHanderStub);
+            _restService = new RESTRequest<PlacesResponse, Dictionary<string, string>>(_httpClient);
 
             var jsonFileHandler = new JsonFileHandler();
             Globals.Credentials = jsonFileHandler.ReadJson<Credentials>(_credentialFile);
@@ -45,7 +49,8 @@ namespace DomainBusinessLogic.UnitTest
         [Fact]
         public async Task PlaceAutocompleteSearchProcessTest_WithRequiredValues()
         {
-            _httpClient = new HttpClient();
+            var httpClient = new HttpClient();
+            var restService = new RESTRequest<PlacesResponse, Dictionary<string, string>>(httpClient);
             BusinessResult<SearchPlacesResponse> result = default;
 
             try
@@ -60,7 +65,7 @@ namespace DomainBusinessLogic.UnitTest
                     CancellationToken = CancellationToken.None,
                 };
 
-                var searchProcessor = new PlaceAutocompleteSearchProcessor(_httpClient, _logger);
+                var searchProcessor = new PlaceAutocompleteSearchProcessor(restService, _logger);
                 result = await searchProcessor.ExecuteAsync(request);
                 _output.WriteLine(JsonConvert.SerializeObject(result));
 
@@ -113,7 +118,7 @@ namespace DomainBusinessLogic.UnitTest
                 CancellationToken = CancellationToken.None,
             };
 
-            var searchProcessor = new PlaceAutocompleteSearchProcessor(_httpClient, _logger);
+            var searchProcessor = new PlaceAutocompleteSearchProcessor(_restService, _logger);
             result = await searchProcessor.ExecuteAsync(request);
             _output.WriteLine(JsonConvert.SerializeObject(result));
 
@@ -136,7 +141,7 @@ namespace DomainBusinessLogic.UnitTest
                 CancellationToken = CancellationToken.None,
             };
 
-            var searchProcessor = new PlaceAutocompleteSearchProcessor(_httpClient, _logger);
+            var searchProcessor = new PlaceAutocompleteSearchProcessor(_restService, _logger);
             result = await searchProcessor.ExecuteAsync(request);
             _output.WriteLine(JsonConvert.SerializeObject(result));
 
@@ -159,7 +164,7 @@ namespace DomainBusinessLogic.UnitTest
                 CancellationToken = CancellationToken.None,
             };
 
-            var searchProcessor = new PlaceAutocompleteSearchProcessor(_httpClient, _logger);
+            var searchProcessor = new PlaceAutocompleteSearchProcessor(_restService, _logger);
             result = await searchProcessor.ExecuteAsync(request);
             _output.WriteLine(JsonConvert.SerializeObject(result));
 

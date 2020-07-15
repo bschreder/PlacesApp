@@ -1,4 +1,5 @@
-﻿using APIService.RestApi;
+﻿using APIService.Interfaces;
+using APIService.RestApi;
 using DomainEntities.Place;
 using DomainEntities.PlaceSearch;
 using Library.BusinessErrors;
@@ -8,14 +9,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DomainBusinessLogic.PlaceSearch
 {
     public class PlaceAutocompleteSearchProcessor : IBusinessProcessor<BusinessResult<SearchPlacesResponse>, SearchPlacesRequest>
     {
-        private readonly HttpClient _httpClient = default;
+        private readonly IRESTRequest<PlacesResponse, Dictionary<string, string>> _restService = default;
         private readonly ILogger _logger = default;
 
         /// <summary>
@@ -23,9 +23,9 @@ namespace DomainBusinessLogic.PlaceSearch
         /// </summary>
         /// <param name="httpClient"></param>
         /// <param name="logger"></param>
-        public PlaceAutocompleteSearchProcessor(HttpClient httpClient, ILogger logger)
+        public PlaceAutocompleteSearchProcessor(IRESTRequest<PlacesResponse, Dictionary<string, string>> restService, ILogger logger)
         {
-            _httpClient = httpClient;
+            _restService = restService;
             _logger = logger;
         }
 
@@ -73,7 +73,7 @@ namespace DomainBusinessLogic.PlaceSearch
                 var restRequest = CreateRequestDictionary(request);
 
                 //  make service request
-                var restService = await new RESTRequest<PlacesResponse, Dictionary<string, string>>(_httpClient).Get(restServiceParameters, restRequest.Result);
+                var restService = await _restService.Get(restServiceParameters, restRequest.Result);
                 result.Error.AddRange(restService.Error);
 
                 //  check response status
@@ -119,7 +119,7 @@ namespace DomainBusinessLogic.PlaceSearch
         //  TODO:   use reflection
         private BusinessResult<Dictionary<string, string>> CreateRequestDictionary(SearchPlacesRequest request)
         {
-            var result = new BusinessResult<Dictionary<string, string>>() { Result = new Dictionary<string, string>()};
+            var result = new BusinessResult<Dictionary<string, string>>() { Result = new Dictionary<string, string>() };
 
             try
             {

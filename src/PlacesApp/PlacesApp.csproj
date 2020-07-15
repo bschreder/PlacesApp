@@ -243,6 +243,10 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\APIService\APIService.csproj">
+      <Project>{EAE26870-E04A-4FE9-8987-A312E47392B6}</Project>
+      <Name>APIService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DomainBusinessLogic\DomainBusinessLogic.csproj">
       <Project>{619DA5B7-6B6A-4EE2-B161-680DA99BDD9E}</Project>
       <Name>DomainBusinessLogic</Name>

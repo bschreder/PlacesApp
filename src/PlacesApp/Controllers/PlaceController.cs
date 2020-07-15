@@ -1,10 +1,13 @@
-﻿using DomainBusinessLogic.PlaceSearch;
+﻿using APIService.RestApi;
+using DomainBusinessLogic.PlaceSearch;
 using DomainEntities.Application;
+using DomainEntities.Place;
 using DomainEntities.PlaceSearch;
 using Library.BusinessErrors;
 using Library.Infrastructure;
 using Microsoft.Extensions.Logging;
 using PlacesApp.ViewModel.Place;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -51,7 +54,10 @@ namespace PlacesApp.Controllers
             request.PlaceBaseUrl = Globals.Configuration?.PlaceBaseUrl;
 
             using (var httpClient = new HttpClient())
-                response = await new PlaceAutocompleteSearchProcessor(httpClient, _logger).ExecuteAsync(request);
+            {
+                var restService = new RESTRequest<PlacesResponse, Dictionary<string, string>>(httpClient);
+                response = await new PlaceAutocompleteSearchProcessor(restService, _logger).ExecuteAsync(request);
+            }
 
             return  new ActionResponse<SearchPlacesResponse>(response, _displayErrors, _logger);
         }

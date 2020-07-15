@@ -62,6 +62,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\APIService\APIService.csproj">
+      <Project>{EAE26870-E04A-4FE9-8987-A312E47392B6}</Project>
+      <Name>APIService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\DomainBusinessLogic\DomainBusinessLogic.csproj">
       <Project>{619DA5B7-6B6A-4EE2-B161-680DA99BDD9E}</Project>
       <Name>DomainBusinessLogic</Name>
