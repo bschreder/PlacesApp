@@ -14,7 +14,8 @@ namespace PlacesApp.ViewModel.Place
 
         //  Errors
         private bool _showErrors => PlaceIndexResponse.Result.DisplayErrors ?? false;
-        public bool DisplayErrors => _showErrors && PlaceIndexResponse.Error?.Count != 0;
+        //public bool DisplayErrors => _showErrors && PlaceIndexResponse.Error?.Count != 0;
+        public bool DisplayErrors => _showErrors;
         public List<BusinessError> ErrorList => PlaceIndexResponse.Error;
 
 

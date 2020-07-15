@@ -10,13 +10,13 @@
     @if (Model.DisplayErrors)
     {
         <div id="server-errors" class="text-danger error-log">
-            <strong>ERRORS:  </strong>
+            @*<strong>ERRORS:  </strong>*@
             @foreach (var error in Model.ErrorList)
             {<div class="row">@error.Message</div>}
             <br /><br />
         </div>
+        <div id="ajax-errors" class="text-danger error-log"></div>
     }
-    <div id="ajax-errors" class="text-danger error-log"></div>
 </div>
 
 <h2>Places</h2>

@@ -47,7 +47,7 @@
                 }
             }).done(function (data) {
                 $(searchTerm).removeClass("ui-autocomplete-loading");
-                if (/*Array.isArray(data.Result.Predictions) &&*/ data.result.predictions.length === 0) {
+                if (/*Array.isArray(data.result.predictions) &&*/ data.result.predictions.length === 0) {
                     let msg = 'Invalid input: ' + data.result.status;
                     $(invalidInput).html(msg).show();
                 }
@@ -75,6 +75,7 @@
                 let errorResult = [];
                 errorResult.push('status - ' + status + ': statusText ' + xhr.statusText);
                 errorResult.push('responseText: ' + xhr.responseText);
+                $(invalidInput).html('ZERO_RESULTS returned').show();
 
                 let apiResponse = new ApiResponse(null, errorResult);
                 if (apiResponse.error.length > 0) {
