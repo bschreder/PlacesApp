@@ -47,25 +47,25 @@
                 }
             }).done(function (data) {
                 $(searchTerm).removeClass("ui-autocomplete-loading");
-                if (Array.isArray(data.Result.Predictions) && data.Result.Predictions.length === 0) {
-                    let msg = 'Invalid input: ' + data.Result.Status;
+                if (/*Array.isArray(data.Result.Predictions) &&*/ data.result.predictions.length === 0) {
+                    let msg = 'Invalid input: ' + data.result.status;
                     $(invalidInput).html(msg).show();
                 }
-                if (data.Result.DisplayErrors && data.Error.length > 0) {
+                if (data.result.displayErrors && data.error.length > 0) {
                     let msg = invalidResult(data);
                     $(ajaxError).html(msg).show();
                 }
 
-                predictions = data.Result.Predictions;
-                operationId = data.Result.OperationId;
+                predictions = data.result.predictions;
+                operationId = data.result.operationId;
 
-                let b = data.Result.Predictions;
+                let b = data.result.predictions;
                 let items = [];
                 b.forEach(e => {
                     let item = [];
-                    item.label = e.Description;
-                    item.value = e.Description;
-                    item.id = e.Id;
+                    item.label = e.description;
+                    item.value = e.description;
+                    item.id = e.id;
                     items.push(item);
                 });
                 response(items);
@@ -77,7 +77,7 @@
                 errorResult.push('responseText: ' + xhr.responseText);
 
                 let apiResponse = new ApiResponse(null, errorResult);
-                if (apiResponse.Error.length > 0) {
+                if (apiResponse.error.length > 0) {
                     let msg = invalidResult(apiResponse);
                     $(ajaxError).html(msg).show();
                 }
@@ -92,7 +92,7 @@
             $(searchId).text(ui.item.id);
 
             let prediction = predictions.filter(o => {
-                return o.Id === ui.item.id;
+                return o.id === ui.item.id;
             });
             displaySelectionResult(prediction[0]);
 
@@ -110,19 +110,18 @@
 
     //  display autocomplete selections in a row
     function displaySelectionResult(values) {
-        $(description).text(values.Description);
-        $(distance).text(values.DistanceMeters);
-        $(id).text(values.Id.slice(0, 15));
-        $(types).text(values.Types.join(', '))
+        $(description).text(values.description);
+        $(distance).text(values.distanceMeters);
+        $(id).text(values.id.slice(0, 15));
+        $(types).text(values.types.join(', '))
         $(operationid).text(operationId);
     }
 
     function invalidResult(result) {
         let msg = 'Errors: <br />';
-        result.Error.forEach((e) => {
-            msg += e.Message + '<br />';
+        result.error.forEach((e) => {
+            msg += JSON.stringify(e) + '<br />';
         });
         return msg;
     }
-
 })(jQuery);

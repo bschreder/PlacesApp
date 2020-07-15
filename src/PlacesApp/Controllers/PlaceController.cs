@@ -14,11 +14,14 @@ namespace PlacesApp.Controllers
     public class PlaceController : Controller
     {
         private readonly ILogger _logger = default;
+        private bool _displayErrors = default;
 
         public PlaceController()
         {
             //  TODO:   wire in Real Logger
             _logger = new NullLogger();
+            _displayErrors = Globals.Configuration.DisplayErrors ?? false;
+
         }
 
         /// <summary>
@@ -40,7 +43,7 @@ namespace PlacesApp.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<JsonResult> PlacesAutocomplete(SearchPlacesRequest request)
+        public async Task<ActionResult> PlacesAutocomplete(SearchPlacesRequest request)
         {
             BusinessResult<SearchPlacesResponse> response = default;
 
@@ -50,11 +53,7 @@ namespace PlacesApp.Controllers
             using (var httpClient = new HttpClient())
                 response = await new PlaceAutocompleteSearchProcessor(httpClient, _logger).ExecuteAsync(request);
 
-            response.Result.DisplayErrors = Globals.Configuration.DisplayErrors;
-            return Json(response, JsonRequestBehavior.AllowGet);
+            return  new ActionResponse<SearchPlacesResponse>(response, _displayErrors, _logger);
         }
-
-
-
     }
 }

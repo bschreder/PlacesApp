@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace APIService.RestApi
 {
@@ -36,7 +37,8 @@ namespace APIService.RestApi
 
             if (parameters == null)
             {
-                result.Error.Add(new BusinessError($"{this.GetType().FullName}.Get", LogLevel.Error, $"Service request parameters are null; it must be of type ApiServiceRequestParameters"));
+                result.Error.Add(new BusinessError($"{this.GetType().FullName}.Get", LogLevel.Error, 
+                    $"Service request parameters are null; it must be of type {typeof(RESTRequestParameters).Name}"));
                 return result;
             }
 
@@ -73,7 +75,8 @@ namespace APIService.RestApi
 
             if (parameters == null)
             {
-                result.Error.Add(new BusinessError($"{this.GetType().FullName}.Post", LogLevel.Error, $"Service request parameters are null; it must be of type ApiServiceRequestParameters"));
+                result.Error.Add(new BusinessError($"{this.GetType().FullName}.Get", LogLevel.Error,
+                    $"Service request parameters are null; it must be of type {typeof(RESTRequestParameters).Name}"));
                 return result;
             }
 
@@ -100,6 +103,12 @@ namespace APIService.RestApi
         {
             var result = new BusinessResult<TResult>();
             HttpRequestMessage httpRequest;
+
+            if (_httpClient == null)
+            {
+                result.Error.Add(new BusinessError($"{this.GetType().FullName}.Post", LogLevel.Error, $"bad httpclient"));
+                return result;
+            }
 
             try
             {

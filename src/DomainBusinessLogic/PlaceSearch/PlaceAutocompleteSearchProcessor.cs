@@ -45,10 +45,17 @@ namespace DomainBusinessLogic.PlaceSearch
                 return result;
             }
 
-            if (request.Address == null)
+            if (string.IsNullOrEmpty(request.Address))
             {
                 result.Error.Add(new BusinessError($"{this.GetType().FullName}.ExecuteAsync", LogLevel.Error,
                         "Invalid request:  search address  is invalid", null, request?.OperationId));
+                return result;
+            }
+
+            if (string.IsNullOrEmpty(request.ApiKey))
+            {
+                result.Error.Add(new BusinessError($"{this.GetType().FullName}.ExecuteAsync", LogLevel.Error,
+                        "Invalid ApiKey", null, request?.OperationId));
                 return result;
             }
 
@@ -72,7 +79,7 @@ namespace DomainBusinessLogic.PlaceSearch
                 //  check response status
                 if (!string.IsNullOrEmpty(restService.Result?.Error_message))
                     result.Error.Add(new BusinessError(LogLevel.Error, restService.Result.Error_message, null, request.OperationId));
-                if (!restService.Result?.Status.Equals($"{PlaceResponseStatus.OK}") ?? false)
+                if (!restService.Result?.Status?.Equals($"{PlaceResponseStatus.OK}") ?? true)
                     result.Error.Add(new BusinessError(LogLevel.Error, $"Reponse Status: {restService.Result.Status}", null, request.OperationId));
 
                 if (result.Error.Count == 0)
@@ -99,14 +106,12 @@ namespace DomainBusinessLogic.PlaceSearch
                         result.Result.Predictions.Add(searchPlacePredicition);
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                result.Error.Add(new BusinessError($"{this.GetType().FullName}.CreateRequestDictionary", LogLevel.Critical, "Exception found", ex, request.OperationId));
+                result.Error.Add(new BusinessError($"{this.GetType().FullName}.ExecuteAsync", LogLevel.Critical, "Exception found", ex, request.OperationId));
             }
 
-                result.Error.ErrorLogger(_logger);
             return result;
         }
 

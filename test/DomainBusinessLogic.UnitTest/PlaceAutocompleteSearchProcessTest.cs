@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -52,7 +53,6 @@ namespace DomainBusinessLogic.UnitTest
                 var request = new SearchPlacesRequest()
                 {
                     ApiKey = Globals.Credentials.PlacesApiKey,
-                    //ApiKey = "SWdaAjDTZ",
                     //Address = "1600 Amphitheatre Pkwy, Mountain View, CA 94043",
                     Address = "1600 Amphitheatre",
                     PlaceBaseUrl = _baseUrl,
@@ -75,6 +75,97 @@ namespace DomainBusinessLogic.UnitTest
                 _output.WriteLine($"{result.Error}");
                 Assert.True(false);
             }
+        }
+
+        [Fact]
+        public async Task PlaceAutocompleteSearchProcessTest_WithoutHttpClient()
+        {
+            BusinessResult<SearchPlacesResponse> result = default;
+
+            var request = new SearchPlacesRequest()
+            {
+                ApiKey = Globals.Credentials.PlacesApiKey,
+                Address = "1600 Amphitheatre",
+                PlaceBaseUrl = _baseUrl,
+                OperationId = $"{Guid.NewGuid()}",
+                CancellationToken = CancellationToken.None,
+            };
+
+            var searchProcessor = new PlaceAutocompleteSearchProcessor(null, _logger);
+            result = await searchProcessor.ExecuteAsync(request);
+            _output.WriteLine(JsonConvert.SerializeObject(result));
+
+            Assert.NotNull(result);
+            Assert.NotNull(result.Error);
+        }
+
+        [Fact]
+        public async Task PlaceAutocompleteSearchProcessTest_WithoutAddress()
+        {
+            BusinessResult<SearchPlacesResponse> result = default;
+
+            var request = new SearchPlacesRequest()
+            {
+                ApiKey = Globals.Credentials.PlacesApiKey,
+                //Address = "1600 Amphitheatre",
+                PlaceBaseUrl = _baseUrl,
+                OperationId = $"{Guid.NewGuid()}",
+                CancellationToken = CancellationToken.None,
+            };
+
+            var searchProcessor = new PlaceAutocompleteSearchProcessor(_httpClient, _logger);
+            result = await searchProcessor.ExecuteAsync(request);
+            _output.WriteLine(JsonConvert.SerializeObject(result));
+
+            Assert.NotNull(result);
+            Assert.NotNull(result.Error);
+            Assert.Contains(result.Error, e => e.Message.Contains("search address"));
+        }
+
+        [Fact]
+        public async Task PlaceAutocompleteSearchProcessTest_WithOutApiKey()
+        {
+            BusinessResult<SearchPlacesResponse> result = default;
+
+            var request = new SearchPlacesRequest()
+            {
+                //ApiKey = "SWdaAjDTZ",
+                Address = "1600 Amphitheatre",
+                PlaceBaseUrl = _baseUrl,
+                OperationId = $"{Guid.NewGuid()}",
+                CancellationToken = CancellationToken.None,
+            };
+
+            var searchProcessor = new PlaceAutocompleteSearchProcessor(_httpClient, _logger);
+            result = await searchProcessor.ExecuteAsync(request);
+            _output.WriteLine(JsonConvert.SerializeObject(result));
+
+            Assert.NotNull(result);
+            Assert.NotNull(result.Error);
+            Assert.Contains(result.Error, e => e.Message.Contains("Invalid ApiKey"));
+        }
+
+        [Fact]
+        public async Task PlaceAutocompleteSearchProcessTest_WithBadApiKey()
+        {
+            BusinessResult<SearchPlacesResponse> result = default;
+
+            var request = new SearchPlacesRequest()
+            {
+                ApiKey = "SWdaAjDTZ",
+                Address = "1600 Amphitheatre",
+                PlaceBaseUrl = _baseUrl,
+                OperationId = $"{Guid.NewGuid()}",
+                CancellationToken = CancellationToken.None,
+            };
+
+            var searchProcessor = new PlaceAutocompleteSearchProcessor(_httpClient, _logger);
+            result = await searchProcessor.ExecuteAsync(request);
+            _output.WriteLine(JsonConvert.SerializeObject(result));
+
+            Assert.NotNull(result);
+            Assert.NotNull(result.Error);
+            Assert.Contains(result.Error, e => e.Message.Contains("Error"));
         }
 
         private bool isDisposed = false;

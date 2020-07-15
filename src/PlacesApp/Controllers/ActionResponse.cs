@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Web.Mvc;
+using Library.BusinessErrors;
 
 namespace PlacesApp.Controllers
 {
@@ -22,13 +23,12 @@ namespace PlacesApp.Controllers
         private readonly HttpStatusCode _httpStatusCode = default;
         private readonly string _httpContent = default;
 
-
         /// <summary>
         /// Return HttpResponse status and content
         /// </summary>
         /// <param name="result"> body of response </param>
         /// <returns> ActionResult </returns>
-        public ActionResponse(BusinessResult<T> result)
+        public  ActionResponse(BusinessResult<T> result, bool displayErrors, ILogger logger)
         {
             //  generate http status code based on result.Error
             if (result.Error.Count == 0)
@@ -43,9 +43,14 @@ namespace PlacesApp.Controllers
             else
                 _httpStatusCode = HttpStatusCode.BadRequest;
 
-            //  generate return content based on result.Result 
+            //  generate return content based on result.Result
             if (result.Result == null)
                 result.Result = new T();
+
+            //  manage error results
+            result.Error.ErrorLogger(logger);
+            if (!displayErrors)
+                result.Error.Clear();
 
             _httpContent = JsonConvert.SerializeObject(result);
         }
@@ -56,7 +61,7 @@ namespace PlacesApp.Controllers
         /// </summary>
         /// <param name="result"> body of response </param>
         /// <returns>  </returns>
-        public ActionResponse(BusinessResult result)
+        public ActionResponse(BusinessResult result, bool displayErrors, ILogger logger)
         {
             if (result.Error.Count == 0)
                 _httpStatusCode = HttpStatusCode.NoContent;
@@ -64,6 +69,11 @@ namespace PlacesApp.Controllers
                 _httpStatusCode = HttpStatusCode.InternalServerError;
             else
                 _httpStatusCode = HttpStatusCode.BadRequest;
+
+            //  manage error results
+            result.Error.ErrorLogger(logger);
+            if (!displayErrors)
+                result.Error.Clear();
 
             _httpContent = JsonConvert.SerializeObject(result);
         }
